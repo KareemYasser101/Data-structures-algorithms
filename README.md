@@ -8,7 +8,12 @@ This repo will contain most of the Data structures and algorithms implemented.
     g++ main.cpp DSA.cpp -o output.exe
 
    ```
-or you can create a tasks.json file on vscode
+then run the program by typing:
+```
+./output.exe
+
+```
+or you can create a tasks.json file on vscode<br>
 ![image](https://github.com/KareemYasser101/Data-structures-algorithms/assets/152732674/8abd683f-1f08-4497-b486-3691efdccc22)
 
 Here in the args field you can remove the third line and put:
