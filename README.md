@@ -1,8 +1,8 @@
 # Data-structures-algorithms
 This repo will contain most of the Data structures and algorithms implemented.
 
-# Steps to run the program:
-1- Download all source files
+## Steps to run the program:
+1- Download all source files <br>
 2- To compile multiple cpp files you can type on the terminal while being on the same directory :
    ```
     g++ main.cpp DSA.cpp -o output.exe
