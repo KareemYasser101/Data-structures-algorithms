@@ -150,25 +150,29 @@ void SLL::list::DeleteByPos(int position){
 }
 
 void SLL::list::DeleteByValue(int value){
-    if(head -> data == value)
+    if(head == nullptr)
+        return;
+
+    while(head -> data == value && head != tail)
         SLL::list::DeleteFromHead();
 
-    Node* temp2 = head;
-    Node* temp1 = temp2;
+    if(head != tail){
+        Node* temp2 = head;
+        Node* temp1 = temp2;
 
-    while ( temp2 -> next != tail ){
+        while ( temp2 -> next != tail ){
 
-        temp1 = temp2;
-        temp1 = temp1 -> next;
-        if(temp1->data == value){
-            temp2 -> next = temp1 -> next;
-            delete temp1;
+            temp1 = temp2;
+            temp1 = temp1 -> next;
+            if(temp1->data == value){
+                temp2 -> next = temp1 -> next;
+                delete temp1;
+            }
+            else
+                temp2 = temp2 -> next;
+
         }
-        else
-            temp2 = temp2 -> next;
-
     }
-
     if(tail->data == value)
         SLL::list::DeleteFromTail();
     
@@ -203,6 +207,7 @@ void SLL::list::print(){
         std::cout<<current->data<<" ";
         current = current -> next;
     }
+    std::cout<<std::endl;
 }
 
 
@@ -289,10 +294,14 @@ void DLL::list::DeleteFromHead(){
         std::cout<<"List is empty."<<std::endl;
         return;
     }
-    
-    head = head->next;
-    delete (head -> prev);
-    head -> prev = nullptr;
+    Node* temp = head;
+    if(head == tail)
+        head = tail = nullptr;
+    else{
+        head = head->next;
+        head -> prev = nullptr;
+    }
+    delete temp;  
 }
 
 void DLL::list::DeleteFromTail(){
@@ -300,10 +309,14 @@ void DLL::list::DeleteFromTail(){
         std::cout<<"List is empty."<<std::endl;
         return;
     }
-
-    tail = tail -> prev;
-    delete (tail -> next);
-    tail -> next = nullptr;
+    Node* temp = tail;
+    if(head == tail)
+        head = tail = nullptr;
+    else{
+        tail = tail -> prev;
+        tail -> next = nullptr;
+    }
+    delete temp;     
 }
 
 void DLL::list::DeleteByPos(int position){
@@ -352,26 +365,32 @@ void DLL::list::DeleteByPos(int position){
 }
 
 void DLL::list::DeleteByValue(int value){
-    if(head->data == value)
+    if(head == nullptr)
+          return;
+    // first case: if the element is the head
+    while(head->data == value && head != tail) // a while loop in case the elements is the same consecutively
         DLL::list::DeleteFromHead();
-    
-    Node* temp2 = head;
-    Node* temp1 = temp2;
+    // third case: if the element is not the head nor the tail
+    if(head != tail){ // to check that the list doesn't consist of only one node
+          Node* temp2 = head;
+          Node* temp1 = temp2;
 
-    while ( temp2 -> next != tail ){
+          while ( temp2 -> next != tail ){
 
-        temp1 = temp2;
-        temp1 = temp1 -> next;
-        if(temp1->data == value){
-            temp2 -> next = temp1 -> next;
-            temp1 -> next -> prev = temp2;
-            delete temp1;
-        }
-        else
-            temp2 = temp2 -> next;
+               temp1 = temp2;
+               temp1 = temp1 -> next;
+               if(temp1->data == value){
+                    temp2 -> next = temp1 -> next;
+                    temp1 -> next -> prev = temp2;
+                    delete temp1;
+               }
+               else
+                    temp2 = temp2 -> next;
 
+          }
     }
 
+    // second case: if the element is the tail 
     if(tail->data == value)
         DLL::list::DeleteFromTail();
 }
@@ -401,4 +420,5 @@ void DLL::list::print(){
         std::cout<<current->data<<" ";
         current = current -> next;
     }
+    std::cout<<std::endl;
 }

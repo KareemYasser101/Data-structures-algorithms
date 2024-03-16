@@ -99,7 +99,7 @@ namespace DLL{
             void DeleteByValue(int value);
 
             //function to reverse list
-            void c;
+            void ReverseList();
 
             //function to print a node
             void print();

@@ -14,6 +14,14 @@ int main(){
     */  
     
     SLL::list mylist;
+    for (int i = 1; i <= 10; i++)
+    {
+        mylist.append(6);
+    }
+    mylist.append(5);
+    mylist.print();
+    mylist.DeleteByValue(6);
+    mylist.print();
 
     /*
     Functions that come with SLL & DLL:
