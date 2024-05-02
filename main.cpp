@@ -1,5 +1,6 @@
 #include <iostream>
 #include "DSA.h"
+#include <random>
 
 using namespace std;
 
@@ -13,7 +14,7 @@ int main(){
     3- put the name of your list
     */  
     
-    SLL::list mylist;
+    //SLL::list mylist;
 
     /*
     Functions that come with SLL & DLL:
@@ -37,6 +38,46 @@ int main(){
     
     // More to be added!!
     
+
+    BST::BinarySearchTree bst;
+    BST::Node*& root = bst.getRoot();
+
+    // Define the random number generator
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 100); // Change the range as needed
+
+    for (int i = 1; i <= 10; i++)
+        bst.insertNode(dis(gen), root);
+    bst.insertNode(6, root);
+    cout<<"Printing BST preOrder: ";
+    bst.preOrderTrav(root);
+    cout<<endl;
+
+    cout<<"Printing BST inOrder(ascending): ";
+    bst.inOrderTrav(root);
+    cout<<endl;
+
+    cout<<"Printing BST postOrder: ";
+    bst.postOrderTrav(root);
+    cout<<endl;
+
+    cout<<endl;
+
+    int key;
+    cout<<"Enter key to search for: ";
+    cin>>key;
+
+    cout<< (bst.searchNode(key, bst.getRoot()) ? "Found":"Not found") <<endl;
+
+    int value;
+    cout<<"Enter value to delete: ";
+    cin>>value;
+    bst.deleteNode(value, root);
+
+    cout<<"BST after deleting "<<value<<": ";
+    bst.inOrderTrav(root);
+
     return 0;
 }
 

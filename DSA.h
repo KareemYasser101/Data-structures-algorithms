@@ -106,3 +106,43 @@ namespace DLL{
 
     };
 }
+
+namespace BST {
+
+    class Node {
+
+        public:
+
+            int data;
+            Node* left;
+            Node* right;
+
+            //default constructor
+            Node();
+            //parametarized constructor
+            Node(int value);
+    };
+
+    class BinarySearchTree {
+        private:
+            Node* root;
+        public:
+            //Default constructor
+            BinarySearchTree();
+            //destructor
+            ~BinarySearchTree();
+
+            //Getter
+            Node*& getRoot();
+
+            //Methods
+            void insertNode(int value, Node* &root);
+            bool searchNode(int key, Node* root);
+            void deleteNode(int value, Node* &root);
+
+            void preOrderTrav(Node* root);
+            void inOrderTrav(Node* root);
+            void postOrderTrav(Node* root);
+
+    };
+}

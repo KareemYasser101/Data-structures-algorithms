@@ -422,3 +422,156 @@ void DLL::list::print(){
     }
     std::cout<<std::endl;
 }
+
+
+//*************** BST IMPLEMENTATION ***************
+
+BST::Node::Node(){
+    data = 0;
+    left = nullptr;
+    right = nullptr;
+}
+
+BST::Node::Node(int value){
+    data = value;
+    left = nullptr;
+    right = nullptr;
+}
+
+BST::BinarySearchTree::BinarySearchTree(){
+    root = nullptr;
+}
+
+BST::BinarySearchTree::~BinarySearchTree(){
+
+}
+
+BST::Node*& BST::BinarySearchTree::getRoot(){ return root; }
+
+void BST::BinarySearchTree::insertNode(int value, Node* &root){
+
+    if(!root){
+        root = new Node(value);
+        return;
+    }
+
+    if(value < root->data)
+        insertNode(value, root->left);
+    else if(value > root->data)
+        insertNode(value, root->right);
+    else{
+        std::cout<<"Can't insert duplicate."<<std::endl;
+        return;
+    } 
+}
+
+bool BST::BinarySearchTree::searchNode(int key, Node* root){
+    if(!root)
+        return false;
+    
+    if(key < root->data)
+        return searchNode(key, root->left);
+    else if(key > root->data)
+        return searchNode(key, root->right);
+    else
+        return true;
+}
+
+void BST::BinarySearchTree::deleteNode(int valToDelete, Node* &root){
+    /*
+        In deletion we have three cases:
+            1- val is a leaf
+                -just delete the leaf
+            2- val has one child
+                -make it's parent point to it's only child 
+                -then delete it
+            3- val has two childs
+                -make it's parent point to it's inorder predessesor(largest in the left sub tree) or 
+                 successor(smallest in the right sub tree)
+                -then delete it
+    */
+   if(!root)
+     return;
+
+    static Node* parent = root;
+    if(valToDelete < root->data){
+        parent = root;
+        deleteNode(valToDelete, root->left);
+    }
+    else if(valToDelete > root->data){
+        parent = root;
+        deleteNode(valToDelete, root->right);
+    }
+    else if(valToDelete == root->data){ // if the valToDelete is equal to root->data
+    //case 1:
+        if(root->left == nullptr && root->right == nullptr){
+            if(parent->right->data == valToDelete)
+                parent->right = nullptr;
+            else
+                parent->left = nullptr;
+            delete root;
+        }
+    //case 2:
+        else if(!(root -> left)){
+            Node* rightChild = root -> right;
+            if(parent->right->data == valToDelete)
+                parent->right = rightChild;
+            else
+                parent->left = rightChild;
+
+            delete root;
+        }
+        else if(!(root -> right)){
+            Node* leftChild = root -> left;
+            delete root;
+            if(parent->left->data == valToDelete)
+                parent->left = leftChild;
+            else
+                parent->right = leftChild;
+
+            delete root;
+        }
+    //case 3: 
+        else {
+            Node* minRight; // will hold minimum in right sub tree
+            parent->data = root->data;
+            while(root->right != nullptr){
+                minRight->data = 99999999;
+                if(root->right->data < minRight->data)
+                    minRight->data = root->data;
+            }
+
+            deleteNode(root->right->data, root->right);
+        }
+    }
+    else
+     std::cout<<"Value not found in BST."<<std::endl;
+}
+
+void BST::BinarySearchTree::preOrderTrav(Node* root){
+    if(!root)
+        return;
+
+    std::cout<<root->data<<" ";
+    preOrderTrav(root->left);
+    preOrderTrav(root->right);
+    
+}
+
+void BST::BinarySearchTree::inOrderTrav(Node* root){
+    if(!root)
+        return;
+
+    inOrderTrav(root->left);
+    std::cout<<root->data<<" ";
+    inOrderTrav(root->right);
+}
+
+void BST::BinarySearchTree::postOrderTrav(Node* root){
+    if(!root)
+        return;
+
+    postOrderTrav(root->left);
+    postOrderTrav(root->right);
+    std::cout<<root->data<<" ";
+}
