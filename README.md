@@ -18,7 +18,7 @@ or you can create a tasks.json file on vscode<br>
 
 Here in the args field you can remove the third line and put:
 ```
-"${wordspaceFolder}/*.cpp",
+"${workspaceFolder}/*.cpp",
 
 ```
 this command tells the compiler to compile all the files with the cpp extension
